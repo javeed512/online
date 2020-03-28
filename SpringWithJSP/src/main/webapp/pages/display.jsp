@@ -11,18 +11,8 @@
 <h1 style="color:fuchsia;">WELCOME TO JSP</h1>
 
 
-<% 
 
-	String uname = (String) session.getAttribute("uname");
-
-	out.print("Welcome "+uname);
-
-
-%>
-
-
-
-WELCOME Again: ${uname}
+Emp Data : ${empObj}
 
 
 

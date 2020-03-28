@@ -1,47 +1,60 @@
 package com.capg;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+
+
+
+//@RestController
 @Controller
 @RequestMapping("/app")
-public class HelloController {
-	
+public class HelloController {	
 	@Autowired
-	Bank bank1;
+	EmpRepository repo;
 	
+	//@PostMapping(path = "/add")
+	@RequestMapping("/add")
+	public String addEmployee(@RequestParam("eid") int eid,@RequestParam("ename") String ename,@RequestParam("sal") double sal, HttpSession session) {
 
-	@Autowired
-	Bank bank2;
-	
-	
-	//@RequestMapping("/display")
-	@GetMapping("/display")
-	//@ResponseBody
-	public String display(@RequestParam("uname") String uname , HttpSession session) {
+			Employee emp  = new Employee();
+			
+				emp.setEid(eid);
+				emp.setEname(ename);
+				emp.setSal(sal);
 		
-		
-		System.out.println(bank1);
-		System.out.println(bank2);
-		
-				session.setAttribute("uname", uname);
-		
-		
+		 session.setAttribute("empObj", emp);
+
+		System.out.println(emp);
+
+		repo.save(emp);
 		
 		return "display";
-		
-		
+
 	}
-	
-	
-	
+
+	/*
+	 * //@RequestMapping("/display")
+	 * 
+	 * @GetMapping("/display") //@ResponseBody public ResponseEntity<String>
+	 * display(@RequestParam("uname") String uname , HttpSession session) {
+	 * 
+	 * 
+	 * System.out.println(bank1); System.out.println(bank2);
+	 * 
+	 * session.setAttribute("uname", uname);
+	 * 
+	 * 
+	 * 
+	 * return new ResponseEntity<String>("Transaction Completed",HttpStatus.OK);
+	 * 
+	 * 
+	 * }
+	 */
 
 }
